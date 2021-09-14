@@ -54,13 +54,13 @@ module.exports = {
             const guild = client.guilds.cache.get(interaction.guild_id);
             const member = guild.members.cache.get(interaction.member.user.id);
 
-            if (!member.voice.channel) return client.sendTime(interaction, "❌ | You must be in a voice channel to use this command.");
-            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, ":x: | **You must be in the same voice channel as me to use this command!**");
+            if (!member.voice.channel) return client.sendTime(interaction, "❌ | You must be in a voice channel to use this command.", true);
+            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, ":x: | **You must be in the same voice channel as me to use this command!**", true);
             let player = await client.Manager.get(interaction.guild_id);
-            if (!player) return client.sendTime(interaction, "❌ | **Nothing is playing right now...**");
-            if (!args[0].value) return client.sendTime(interaction, `🔉 | Current volume \`${player.volume}\`.`);
+            if (!player) return client.sendTime(interaction, "❌ | **Nothing is playing right now...**", true);
+            if (!args || !args[0]?.value) return client.sendTime(interaction, `🔉 | Current volume \`${player.volume}\`.`, true);
             let vol = parseInt(args[0].value);
-            if (!vol || vol < 1 || vol > 100) return client.sendTime(interaction, `**Please choose a number between** \`1 - 100\``);
+            if (!vol || vol < 1 || vol > 100) return client.sendTime(interaction, `**Please choose a number between** \`1 - 100\``, true);
             player.setVolume(vol);
             client.sendTime(interaction, `🔉 | Volume set to \`${player.volume}\``);
         },

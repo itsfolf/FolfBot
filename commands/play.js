@@ -121,13 +121,13 @@ module.exports = {
         run: async (client, interaction, args, { GuildDB }) => {
             const guild = client.guilds.cache.get(interaction.guild_id);
             const member = guild.members.cache.get(interaction.member.user.id);
-            const voiceChannel = member.voice.channel;
+            const voiceChannel = member?.voice?.channel;
             let awaitchannel = client.channels.cache.get(interaction.channel_id); /// thanks Reyansh for this idea ;-;
-            if (!member.voice.channel) return client.sendTime(interaction, "❌ | **You must be in a voice channel to use this command.**");
-            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, ":x: | **You must be in the same voice channel as me to use this command!**");
+            if (!voiceChannel) return client.sendTime(interaction, "❌ | **You must be in a voice channel to use this command.**", true);
+            if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, ":x: | **You must be in the same voice channel as me to use this command!**", true);
             let CheckNode = client.Manager.nodes.get(client.botconfig.Lavalink.id);
             if (!CheckNode || !CheckNode.connected) {
-              return client.sendTime(interaction,"❌ | **Lavalink node not connected**");
+              return client.sendTime(interaction,"❌ | **Lavalink node not connected**", true);
             }
     
             let player = client.Manager.create({

@@ -58,7 +58,7 @@ module.exports = {
           client.botconfig.Website
         }${client.botconfig.CallbackURL}&response_type=code)`
       );
-    interaction.send(embed);
+    interaction.send(embed, true);
   },
   },
 };

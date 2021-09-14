@@ -138,7 +138,7 @@ SlashCommand: {
             inline: true
         })
 
-    return interaction.send(embed);
+    return interaction.send(embed, true);
 })
 }
 }

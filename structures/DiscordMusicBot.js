@@ -85,7 +85,7 @@ class DiscordMusicBot extends Client {
 
       //Easy to send respnose so ;)
       interaction.guild = await this.guilds.fetch(interaction.guild_id);
-      interaction.send = async (message) => {
+      interaction.send = async (message, ephemeral = false) => {
         return await this.api
           .interactions(interaction.id, interaction.token)
           .callback.post({
@@ -93,10 +93,10 @@ class DiscordMusicBot extends Client {
               type: 4,
               data:
                 typeof message == "string"
-                  ? { content: message }
+                  ? { content: message, flags: ephemeral ? 64 : 0 }
                   : message.type && message.type === "rich"
-                  ? { embeds: [message] }
-                  : message,
+                  ? { embeds: [message], flags: ephemeral ? 64 : 0 }
+                  : { ...message, flags: ephemeral ? (message.flags || 0) | 64 : 0 },
             },
           });
       };
@@ -240,10 +240,10 @@ class DiscordMusicBot extends Client {
     Channel.send(embed);
   }
 
-  sendTime(Channel, Error) {
+  sendTime(Channel, Error, Ephemeral = false) {
     let embed = new MessageEmbed().setColor("RANDOM").setDescription(Error);
 
-    Channel.send(embed);
+    Channel.send(embed, Ephemeral);
   }
 
   build() {

@@ -158,9 +158,9 @@ What would you like to edit?
           client.sendTime(interaction, `The prefix has now been set to \`${prefix}\``);
         } else {
           //has not prefix
-          client.sendTime(interaction, `The prefix of this server is \`${GuildDB.prefix}\``);
+          client.sendTime(interaction, `The prefix of this server is \`${GuildDB.prefix}\``, true);
         }
-      } else if (config === "djrole") {
+      } else if (config === "dj") {
         //DJ role
         if (
           interaction.data.options[0].options &&
@@ -181,7 +181,7 @@ What would you like to edit?
            * @type {require("discord.js").Role}
            */
           let role = interaction.guild.roles.cache.get(GuildDB.DJ);
-          client.sendTime(interaction, `The DJ role of this server is ${role.name}`);
+          client.sendTime(interaction, `The DJ role of this server is ${role?.name || "Not set"}`, true);
         }
       }
     },

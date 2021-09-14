@@ -78,10 +78,10 @@ run: async (client, message, args, { GuildDB }) => {
       }))
       user.send(embed);
     }catch(e) {
-      return client.sendTime(interaction, "**:x: Your DMs are disabled**")
+      return client.sendTime(interaction, "**:x: Your DMs are disabled**", true)
     }
 
-    client.sendTime(interaction, "✅ | **Check your DMs!**")
+    client.sendTime(interaction, "✅ | **Check your DMs!**", true)
   },
   },
 };
