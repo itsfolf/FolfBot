@@ -54,9 +54,7 @@ module.exports = {
           client.botconfig.ClientID
         }&permissions=${
           client.botconfig.Permissions
-        }&scope=bot%20${client.botconfig.Scopes.join("%20")}&redirect_url=${
-          client.botconfig.Website
-        }${client.botconfig.CallbackURL}&response_type=code)`
+        }&scope=bot%20${client.botconfig.Scopes.join("%20")})`
       );
     interaction.send(embed, true);
   },
