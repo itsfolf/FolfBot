@@ -1,3 +1,3 @@
 module.exports = (client, guild) => {
-  require("../util/RegisterSlashCommands")(client, guild.id);
+  if (!client.botconfig.GlobalCommands) require("../util/RegisterSlashCommands")(client, guild.id);
 };

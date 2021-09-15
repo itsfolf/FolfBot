@@ -45,6 +45,24 @@ module.exports = {
                 description: `Please provide a bassboost level. Available Levels: low, medium, high, or none`,
                 value: "[level]",
                 type: 3,
+                "choices": [
+                    {
+                        "name": "None",
+                        "value": "none"
+                    },
+                    {
+                        "name": "Low",
+                        "value": "low"
+                    },
+                    {
+                        "name": "Medium",
+                        "value": "medium"
+                    },
+                    {
+                        "name": "High",
+                        "value": "high"
+                    },
+                ],
                 required: true,
             },
         ],

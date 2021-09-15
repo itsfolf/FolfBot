@@ -6,14 +6,16 @@ const path = require("path");
  * @param {require("../structures/DiscordMusicBot")} client
  * @param {string} guild
  */
-module.exports = (client, guild) => {
+module.exports = (client, guild = undefined) => {
   client.log("Registering slash commands for " + guild);
 
   let commandsDir = path.join(__dirname, "..", "commands");
 
   fs.readdir(commandsDir, (err, files) => {
     if (err) throw err;
+    let errorCount = 0;
     files.forEach(async (file) => {
+      if (errorCount > 3) return;
       let cmd = require(commandsDir + "/" + file);
       if (!cmd.SlashCommand || !cmd.SlashCommand.run) return;
       let dataStuff = {
@@ -24,7 +26,7 @@ module.exports = (client, guild) => {
 
       //Creating variables like this, So you might understand my code :)
       let ClientAPI = client.api.applications(client.user.id);
-      let GuildAPI = ClientAPI.guilds(guild);
+      let API = guild ? ClientAPI.guilds(guild) : ClientAPI;
 
       client.log(
         "[Slash Command]: [POST] Guild " +
@@ -33,8 +35,9 @@ module.exports = (client, guild) => {
           dataStuff.name
       );
       try {
-        await GuildAPI.commands.post({ data: dataStuff });
+        await API.commands.post({ data: dataStuff });
       } catch (e) {
+        errorCount++;
         client.log(
           "[Slash Command]: [POST-FAILED] Guild " +
             guild +
@@ -42,6 +45,7 @@ module.exports = (client, guild) => {
             dataStuff.name
         );
         console.log(e);
+        if (e.name.toLowerCase().includes("missing access")) errorCount += 5;
       }
     });
   });

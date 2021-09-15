@@ -254,9 +254,13 @@ class DiscordMusicBot extends Client {
   }
 
   RegisterSlashCommands() {
-    this.guilds.cache.forEach((guild) => {
-      require("../util/RegisterSlashCommands")(this, guild.id);
-    });
+    if (this.botconfig.GlobalCommands) {
+       require("../util/RegisterSlashCommands")(this);
+    } else {
+      this.guilds.cache.forEach((guild) => {
+        require("../util/RegisterSlashCommands")(this, guild.id);
+      });
+    }
   }
 }
 
