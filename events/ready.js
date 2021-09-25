@@ -10,5 +10,9 @@ module.exports = async (client) => {
     client.Manager.init(client.user.id);
     client.log("Successfully Logged in as " + client.user.tag); // You can change the text if you want, but DO NOT REMOVE "client.user.tag"
 client.RegisterSlashCommands();
+client.channels.fetch(client.botconfig.LogChannel).then(channel => {
+    if (channel) client.logChannel = channel;
+    else client.log("Couldn't find log channel.")
+})
 };
 

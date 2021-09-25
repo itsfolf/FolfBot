@@ -66,5 +66,7 @@ module.exports = async (client, message) => {
       );
     cmd.run(client, message, args, { GuildDB });
     client.CommandsRan++;
+    client.logChannel?.send(`[${message.guild.name}\\${message.guild.id}] (#${message.channel.name}\\${message.channel.id}) ~ `
+        + `@${message.author.tag}\\${message.author.id} - ${message.content}`)
   } else return;
 };

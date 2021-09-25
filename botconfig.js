@@ -16,6 +16,8 @@ module.exports = {
   Permissions: 2205280576, //Bot Inviting Permissions
   Website: process.env.Website || "http://localhost", //Website where it was hosted at includes http or https || Use "0.0.0.0" if you using Heroku
   GlobalCommands: false, //Change to true if bot has a lot of guilds
+  AdminGuild: "GuildID",
+  LogChannel: "ChannelID",
 
   //Lavalink
    Lavalink: {

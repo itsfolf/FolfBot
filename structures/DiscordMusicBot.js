@@ -85,6 +85,8 @@ class DiscordMusicBot extends Client {
 
       //Easy to send respnose so ;)
       interaction.guild = await this.guilds.fetch(interaction.guild_id);
+      interaction.channel = await this.channels.fetch(interaction.channel_id);
+
       interaction.send = async (message, ephemeral = false) => {
         return await this.api
           .interactions(interaction.id, interaction.token)
@@ -102,8 +104,11 @@ class DiscordMusicBot extends Client {
       };
 
       let cmd = client.commands.get(command);
-      if (cmd.SlashCommand && cmd.SlashCommand.run)
-        cmd.SlashCommand.run(this, interaction, args, { GuildDB });
+      if (cmd.SlashCommand && cmd.SlashCommand.run) {
+        cmd.SlashCommand.run(this, interaction, args, {GuildDB});
+        client.logChannel?.send(`/[${interaction.guild.name}\\${interaction.guild.id}] (#${interaction.channel.name}\\${interaction.channel.id}) ~ `
+            + `@${interaction.member.user.username}#${interaction.member.user.discriminator}\\${interaction.member.user.id} - ${command} ${JSON.stringify(interaction.data.options || "{}")}`)
+      }
     });
 
     //because not worked lol ;-;
